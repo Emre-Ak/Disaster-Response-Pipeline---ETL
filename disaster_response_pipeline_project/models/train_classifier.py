@@ -25,7 +25,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
-    engine = create_engine('sqlite:///InsertDatabaseName.db')
+    engine = create_engine('sqlite:///DisasterResponse.db')
     df = pd.read_sql_table('DisasterResponsePipeline', engine)
 
     X = df.message.values
@@ -54,7 +54,7 @@ def build_model():
 
     parameters = {
         # due to performance issues just two parameters
-        'vect__ngram_range': (1, 1),
+        'vect__ngram_range': ((1, 1),(1,2)),
         'clf__estimator__n_estimators': [5]
     }
 
