@@ -4,12 +4,14 @@ import numpy as np
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    '''loading to files and merging them'''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = pd.merge(messages, categories, on='id')
     return df
 
 def clean_data(df):
+    '''cleaning the data'''
     categories = df.categories.str.split(";", expand=True)
     row = categories.iloc[0]
     category_colnames = row.apply(lambda x: x[:-2])
@@ -28,6 +30,7 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    '''saving the data in a sql database'''
     engine = create_engine('sqlite:///DisasterResponse.db')
     df.to_sql('DisasterResponsePipeline', engine, index=False)
 
