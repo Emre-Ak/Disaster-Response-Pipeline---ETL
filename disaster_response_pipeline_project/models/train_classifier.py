@@ -34,6 +34,7 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''function for NLP'''
     text = text.lower().strip()
     text = re.sub(r"[^a-zA-Z0-9]", " ", text)
     words = word_tokenize(text)
@@ -46,12 +47,13 @@ def tokenize(text):
 
 
 def build_model():
+    '''building the pipeline'''
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
-
+    #parameters have been kept in low dimensions due to performance issues
     parameters = {
         # due to performance issues just two parameters
         'vect__ngram_range': ((1, 1),(1,2)),
@@ -61,7 +63,7 @@ def build_model():
     cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=6, verbose=3)
     return cv
 
-
+#optional function to evaluate the model
 def evaluate_model(cv, y_test, y_pred):
     labels = np.unique(y_pred)
     # input for confusions matrix must be a list of predictions, not one hot encodings --> call argmax!
@@ -91,11 +93,12 @@ def main():
         model = build_model()
         
         print('Training model...')
-        #tried converting to string to bypass "int object is not iterable" error, but it didnt work
+        
         model.fit(X_train, Y_train)
         Y_pred = model.predict(X_test)
         print('Evaluating model...')
-        evaluate_model(model, Y_test, Y_pred)
+        #if needed one can evaluate the model with following line of code (excluded due to performance) ->
+        #evaluate_model(model, Y_test, Y_pred)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
