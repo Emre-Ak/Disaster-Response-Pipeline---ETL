@@ -25,6 +25,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
+    '''function to read database given user input for database_filepath'''
     engine = create_engine('sqlite:///DisasterResponse.db')
     df = pd.read_sql_table('DisasterResponsePipeline', engine)
 
@@ -65,6 +66,7 @@ def build_model():
 
 #optional function to evaluate the model
 def evaluate_model(cv, y_test, y_pred):
+    '''function to create a confusion matrix based on model'''
     labels = np.unique(y_pred)
     # input for confusions matrix must be a list of predictions, not one hot encodings --> call argmax!
     confusion_mat = confusion_matrix(y_test.argmax(axis=1), y_pred.argmax(axis=1), labels=labels)
