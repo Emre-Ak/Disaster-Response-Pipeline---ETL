@@ -20,6 +20,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
 from sklearn.model_selection import GridSearchCV
@@ -68,17 +69,9 @@ def build_model():
     return cv
 
 #optional function to evaluate the model
-def evaluate_model(cv, y_test, y_pred):
-    '''function to create a confusion matrix based on model'''
-    labels = np.unique(y_pred)
-    # input for confusions matrix must be a list of predictions, not one hot encodings --> call argmax!
-    confusion_mat = confusion_matrix(y_test.argmax(axis=1), y_pred.argmax(axis=1), labels=labels)
-    accuracy = (y_pred == y_test).mean()
-
-    print("Labels:", labels)
-    print("Confusion Matrix:\n", confusion_mat)
-    print("Accuracy:", accuracy)
-    print("\nBest Parameters:", cv.best_params_)
+def evaluate_model(y_test, y_pred):
+    '''function to evaluate model based on classification report'''
+    print(classification_report(y_test, y_pred))
 
 
 def save_model(model, model_filepath):
@@ -102,8 +95,7 @@ def main():
         model.fit(X_train, Y_train)
         Y_pred = model.predict(X_test)
         print('Evaluating model...')
-        #if needed one can evaluate the model with following line of code (excluded due to performance) ->
-        #evaluate_model(model, Y_test, Y_pred)
+        evaluate_model(Y_test, Y_pred)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
