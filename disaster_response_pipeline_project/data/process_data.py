@@ -22,7 +22,10 @@ def clean_data(df):
 
         # convert column from string to numeric
         categories[column] = categories[column].astype(np.int)
-
+    
+    # drop rows where related column has a value of 2 (corrup data)
+    categories.drop(categories[categories.related == 2].index, inplace=True)
+    
     df.drop("categories", axis=1, inplace=True)
     df = pd.concat([df, categories], join='inner', axis=1)
     df = df.drop_duplicates()
