@@ -40,7 +40,10 @@ def tokenize(text):
     text = re.sub(r"[^a-zA-Z0-9]", " ", text)
     words = word_tokenize(text)
     words = [w for w in words if w not in stopwords.words('english')]
-    stemmed = [PorterStemmer().stem(w) for w in words]
+                           
+    # excluded stemming as it has disadvante with lemmatization
+    # stemmed = [PorterStemmer().stem(w) for w in words]
+                     
     lemmed = [WordNetLemmatizer().lemmatize(w) for w in stemmed]
     lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in lemmed]
     tokens = lemmed
