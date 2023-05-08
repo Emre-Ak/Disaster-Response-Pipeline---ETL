@@ -43,7 +43,7 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
-    request_counts = df.groupby('request').count()
+    request_counts = df.groupby('request').count()['message']
     request_names = list(request_counts.index)
     
     # create visuals
@@ -76,7 +76,7 @@ def index():
             ],
 
             'layout': {
-                'title': 'Distribution of request messages',
+                'title': 'Proportion of Request Messages',
                 'yaxis': {
                     'title': "Count"
                 },
