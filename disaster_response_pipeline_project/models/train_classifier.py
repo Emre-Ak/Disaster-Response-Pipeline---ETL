@@ -45,7 +45,7 @@ def tokenize(text):
     # excluded stemming as it has disadvante with lemmatization
     # stemmed = [PorterStemmer().stem(w) for w in words]
                      
-    lemmed = [WordNetLemmatizer().lemmatize(w) for w in stemmed]
+    lemmed = [WordNetLemmatizer().lemmatize(w) for w in words]
     lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in lemmed]
     tokens = lemmed
     return tokens
