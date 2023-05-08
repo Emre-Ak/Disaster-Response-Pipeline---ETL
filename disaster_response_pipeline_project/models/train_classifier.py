@@ -27,7 +27,7 @@ from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
     '''function to read database given user input for database_filepath'''
-    engine = create_engine('sqlite:///' + database_filepath')
+    engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('DisasterResponsePipeline', engine)
 
     X = df.message.values
