@@ -44,3 +44,6 @@ README.md
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+### Further information:
+Link to my GitHub: https://github.com/Emre-Ak/Disaster-Response-Pipeline---ETL.git
